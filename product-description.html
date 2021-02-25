@@ -1,16 +1,16 @@
 <html><head>
     <style>
-        body {
-            background-color:azure;
-            font-family: Helvetica, Arial, sans-serif;
+        #content {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
-    <h1>This is an Overlay</h1>
-    <h2>“Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit…”</h2>
-    <pre id="json"></pre>
-    <button id="close">Close</button>
+    <div id="content">
+        <h1>Product Description</h1>
+        <span>“Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit…”</span>
+    </div>
 
     <script>
         const url = new URL(window.location.href);
@@ -19,18 +19,6 @@
         if (data) {
           var stringifiedObject = decodeURI(data);
           var object = JSON.parse(stringifiedObject);
-      
-          document.getElementById("json").textContent = "data = "+JSON.stringify(object, undefined, 2);
-
-          document.getElementById("close").addEventListener("click", () => {
-            parent.postMessage({
-                id: object.id,
-                extensionId: object.extensionId,
-                type: 'setVisibility',
-                componentId: object.id,
-                visible: false
-            }, '*');
-          });
         }  
     </script>
 
