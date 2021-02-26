@@ -51,10 +51,9 @@ function makeToolkitSdk() {
     };
 
     //Subscribe
-    function subscribe(handler, events) {
+    function subscribe(handler, events, origin) {
         window.addEventListener('message', function(event) {
             const type = event.data.type;
-            const origin = initialData.origin;
 
             if (event.origin !== origin) { return; }
 

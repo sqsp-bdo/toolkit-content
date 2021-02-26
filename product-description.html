@@ -22,7 +22,13 @@
         <script>
             const toolkitSdk = makeToolkitSdk();
             if (toolkitSdk.subscribe) {
-                toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize']);
+                toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize'], 'https://mayflower-pike-jg7c.dev.squarespace.net/');
+            }
+            if (toolkitSdk.setSize) {
+                toolkitSdk.setSize('200px');
+            }
+            if (toolkitSdk.setVisibility) {
+                toolkitSdk.setVisibility(true);
             }
         </script>
     </body>
