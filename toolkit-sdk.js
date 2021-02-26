@@ -1,4 +1,4 @@
-function toolkitSdk() {
+function makeToolkitSdk() {
     const version = '1.0';
 
     //parse initial data
