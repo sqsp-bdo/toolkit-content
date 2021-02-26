@@ -25,7 +25,7 @@ function makeToolkitSdk() {
     function setSize(height, width, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
-            extensionId: object.extensionId,
+            extensionId: initialData.extensionId,
             type: 'setSize',
             componentId,
             height,
@@ -38,7 +38,7 @@ function makeToolkitSdk() {
     function setVisibility(visible, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
-            extensionId: object.extensionId,
+            extensionId: initialData.extensionId,
             type: 'setVisibility',
             componentId,
             visible,
