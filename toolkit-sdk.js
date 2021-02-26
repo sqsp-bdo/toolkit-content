@@ -47,9 +47,7 @@ function makeToolkitSdk() {
     }
 
     const isNumber = function(value) {
-        if (typeof value !== 'number' || value instanceof Number) {
-            return;
-        }
+        return typeof value === 'number' || value instanceof Number;
     };
 
     //Subscribe
