@@ -24,11 +24,11 @@
             if (toolkitSdk.subscribe) {
                 toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize']);
             }
-            if (toolkitSdk.setSize) {
-                toolkitSdk.setSize('200px', '0px');
-            }
             if (toolkitSdk.setVisibility) {
                 toolkitSdk.setVisibility(true);
+            }
+            if (toolkitSdk.setSize) {
+                toolkitSdk.setSize('200px', '0px');
             }
         </script>
     </body>
