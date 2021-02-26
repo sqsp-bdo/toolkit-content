@@ -19,5 +19,9 @@
 
         <script src="/toolkit-content/toolkit-sdk.js"></script>
 
+        <script>
+            const toolkitSdk = makeToolkitSdk();
+            toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize'])
+        </script>
     </body>
 </html>
