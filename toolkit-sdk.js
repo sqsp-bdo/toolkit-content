@@ -1,4 +1,4 @@
-function makeToolkitSdk() {
+function makeToolkitSdk(targetOrigin) {
     const version = '1.0';
 
     //parse initial data
@@ -31,7 +31,7 @@ function makeToolkitSdk() {
             height,
             width,
             version
-        }, parent.origin);
+        }, targetOrigin);
     }
 
     //SetVisiblity
@@ -43,7 +43,7 @@ function makeToolkitSdk() {
             componentId,
             visible,
             version
-        }, parent.origin);
+        }, targetOrigin);
     }
 
     const isNumber = function(value) {
@@ -51,11 +51,11 @@ function makeToolkitSdk() {
     };
 
     //Subscribe
-    function subscribe(handler, events, origin) {
+    function subscribe(handler, events) {
         window.addEventListener('message', function(event) {
             const type = event.data.type;
 
-            if (event.origin !== origin) { return; }
+            if (event.origin !== targetOrigin) { return; }
 
             if (events.indexOf(type) < 0) { return; }
 

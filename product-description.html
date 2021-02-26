@@ -20,9 +20,9 @@
         <script src="/toolkit-content/toolkit-sdk.js"></script>
 
         <script>
-            const toolkitSdk = makeToolkitSdk();
+            const toolkitSdk = makeToolkitSdk('https://mayflower-pike-jg7c.dev.squarespace.net/');
             if (toolkitSdk.subscribe) {
-                toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize'], 'https://mayflower-pike-jg7c.dev.squarespace.net/');
+                toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize']);
             }
             if (toolkitSdk.setSize) {
                 toolkitSdk.setSize('200px');
