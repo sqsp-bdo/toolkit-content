@@ -35,13 +35,15 @@ function makeToolkitSdk(targetOrigin) {
     }
 
     //SetVisiblity
-    function setVisibility(visible, componentId = initialData.id) {
+    function setVisibility(visible, height, width, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
             extensionId: initialData.extensionId,
             type: 'setVisibility',
             componentId,
             visible,
+            height,
+            width,
             version
         }, targetOrigin);
     }

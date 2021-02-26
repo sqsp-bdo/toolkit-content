@@ -25,10 +25,7 @@
                 toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize']);
             }
             if (toolkitSdk.setVisibility) {
-                toolkitSdk.setVisibility(true);
-            }
-            if (toolkitSdk.setSize) {
-                toolkitSdk.setSize('200px', '0px');
+                toolkitSdk.setVisibility(true, '200px', '0px');
             }
         </script>
     </body>
