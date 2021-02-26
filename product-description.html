@@ -21,7 +21,9 @@
 
         <script>
             const toolkitSdk = makeToolkitSdk();
-            toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize'])
+            if (toolkitSdk.subscribe) {
+                toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize']);
+            }
         </script>
     </body>
 </html>
