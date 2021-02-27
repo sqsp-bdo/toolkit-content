@@ -1,6 +1,62 @@
 function makeToolkitSdk(targetOrigin) {
     const version = '1.0';
 
+    const responses = {};
+
+    const handlersByEvents = {
+        'componentsResponse': (response) => {
+            responses[response.id] = response;
+        }
+    };
+
+    const messageValidators = {
+        'windowResize': (message) => isNumber(message.width) && isNumber(message.height),
+        'componentsResponse': (message) => !!message.components && !!message.requestId
+    };
+
+    const messageParsers = {
+        'windowResize': (message) => { return {
+            type: message.type,
+            width: message.width,
+            height: message.height
+        }},
+        'componentsResponse': (message) => {
+            return {
+                id: message.requestId,
+                components: message.components
+            }
+        }
+    };
+
+    window.addEventListener('message', function(event) {
+        const type = event.data.type;
+
+        if (event.origin !== targetOrigin) { return; }
+
+        const events = Object.keys(messageValidators); 
+
+        if (events.indexOf(type) < 0) { return; }
+
+        if(!messageValidators[type](event.data)) { return; }
+
+        const handlers = handlersByEvents[type];
+
+        if (!handlers) { return; }
+
+        const parsedMessage = messageParsers(event.data);
+
+        handlers.forEach(handler => {
+            handler(parsedMessage);
+        });
+    });
+
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
     //parse initial data
     function getInitialData() {
         const url = new URL(window.location.href);
@@ -21,7 +77,33 @@ function makeToolkitSdk(targetOrigin) {
         return {};
     }
 
-    //SetSize
+    async function getComponents() {
+        const requestId = uuidv4();
+
+        parent.postMessage({
+            id: initialData.id,
+            extensionId: initialData.extensionId,
+            type: 'components',
+            version,
+            requestId
+        }, targetOrigin);
+
+        const maxCycles = 100;
+        var cycle = 0;
+
+        while (!responses[requestId]) { 
+            if (maxCycles === cycle) {
+                throw 'Timed out!'
+            }
+            await timeout(50); 
+            cycle++;
+        }
+
+        const response = responses[requestId];
+        delete responses[requestId];
+        return response;
+    }
+
     function setSize(height, width, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
@@ -34,7 +116,6 @@ function makeToolkitSdk(targetOrigin) {
         }, targetOrigin);
     }
 
-    //SetVisiblity
     function setVisibility(visible, height, width, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
@@ -48,36 +129,26 @@ function makeToolkitSdk(targetOrigin) {
         }, targetOrigin);
     }
 
-    const isNumber = function(value) {
+    function isNumber(value) {
         return typeof value === 'number' || value instanceof Number;
     };
 
-    //Subscribe
     function subscribe(handler, events) {
-        window.addEventListener('message', function(event) {
-            const type = event.data.type;
+        events.forEach(event => {
+            if (event === 'componentsResponse') { return; }
 
-            if (event.origin !== targetOrigin) { return; }
-
-            if (events.indexOf(type) < 0) { return; }
-
-            if (type === 'windowResize') {
-                if (!isNumber(event.data.width) || !isNumber(event.data.height)) {
-                    return;
-                }
-
-                handler({
-                    type,
-                    width: event.data.width,
-                    height: event.data.height
-                })
+            if (!handlersByEvents[event]) {
+                handlersByEvents[event] = [];
             }
+
+            handlersByEvents[event].push(handler);
         });
     }
 
     return {
         setSize,
         setVisibility,
-        subscribe
+        subscribe,
+        getComponents
     }
 }
