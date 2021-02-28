@@ -87,7 +87,7 @@ function makeToolkitClient(targetOrigin) {
         parent.postMessage({
             id: initialData.id,
             extensionId: initialData.extensionId,
-            type: 'components',
+            type: 'getComponents',
             version,
             requestId
         }, targetOrigin);
