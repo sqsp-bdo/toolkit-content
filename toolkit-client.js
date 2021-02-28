@@ -43,7 +43,7 @@ function makeToolkitClient(targetOrigin) {
 
         if (!handlers) { return; }
 
-        const parsedMessage = messageParsers(event.data);
+        const parsedMessage = messageParsers[type](event.data);
 
         handlers.forEach(handler => {
             handler(parsedMessage);
