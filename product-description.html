@@ -24,10 +24,11 @@
 
             if (!!toolkitClient) {
                 toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
+                const components = await toolkitClient.getComponents();
+                console.log(components);
                 toolkitClient.setVisibility(true, '220px', '0px');
 
             }
-            
         </script>
     </body>
 </html>
