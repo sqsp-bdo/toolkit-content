@@ -4,9 +4,11 @@ function makeToolkitClient(targetOrigin) {
     const responses = {};
 
     const handlersByEvents = {
-        'componentsResponse': (response) => {
-            responses[response.id] = response;
-        }
+        'componentsResponse': [
+            (response) => {
+                responses[response.id] = response;
+            }
+        ]
     };
 
     const messageValidators = {
