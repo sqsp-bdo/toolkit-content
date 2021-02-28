@@ -53,7 +53,7 @@
 
             if (!!toolkitClient) {
                 toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
-                toolkitClient.setVisibility(true, '800px', '500px');
+                toolkitClient.setVisibility(true, '500px', '600px');
                 document.getElementById('close').addEventListener('click', () => {
                     toolkitClient.setVisibility(false);
                 });
