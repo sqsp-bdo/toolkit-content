@@ -77,7 +77,7 @@ function makeToolkitClient(targetOrigin) {
         return null;
     }
 
-    async function getComponents() {
+    const getComponents  = async () => {
         const requestId = uuidv4();
 
         parent.postMessage({
