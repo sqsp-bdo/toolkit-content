@@ -1,13 +1,15 @@
 <html>
     <head>
         <style>
+            body {
+                background-color: #fff;
+                padding: 10px;
+            }
             #content {
                 width: 100%;
                 height: 100%;
                 font-family: sans-serif;
-                background-color: #fff;
             }
-            
             button {
                 background-color: #000;
                 border: none;
@@ -51,7 +53,7 @@
 
             if (!!toolkitClient) {
                 toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
-                toolkitClient.setVisibility(true, '500px', '300px');
+                toolkitClient.setVisibility(true, '800px', '500px');
                 document.getElementById('close').addEventListener('click', () => {
                     toolkitClient.setVisibility(false);
                 });
