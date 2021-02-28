@@ -77,32 +77,6 @@ function makeToolkitClient(targetOrigin) {
         return null;
     }
 
-    async function getComponents() {
-        const requestId = uuidv4();
-
-        parent.postMessage({
-            id: initialData.id,
-            extensionId: initialData.extensionId,
-            type: 'components',
-            version,
-            requestId
-        }, targetOrigin);
-
-        const maxCycles = 100;
-        var cycle = 0;
-
-        while (!responses[requestId]) { 
-            if (maxCycles === cycle++) {
-                throw 'Timed out!'
-            }
-            await timeout(50);
-        }
-
-        const response = responses[requestId];
-        delete responses[requestId];
-        return response;
-    }
-
     function setSize(height, width, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
@@ -148,9 +122,9 @@ function makeToolkitClient(targetOrigin) {
         setSize,
         setVisibility,
         subscribe,
-        getComponents: new Promise((resolve, reject) => {
+        getComponents: async () => {
             const requestId = uuidv4();
-
+    
             parent.postMessage({
                 id: initialData.id,
                 extensionId: initialData.extensionId,
@@ -164,14 +138,14 @@ function makeToolkitClient(targetOrigin) {
     
             while (!responses[requestId]) { 
                 if (maxCycles === cycle++) {
-                    reject('Timed out!');
+                    throw 'Timed out!'
                 }
                 await timeout(50);
             }
     
             const response = responses[requestId];
             delete responses[requestId];
-            reesolve(response);
-        })
+            return response;
+        }
     }
 }
