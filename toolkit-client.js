@@ -77,6 +77,10 @@ function makeToolkitClient(targetOrigin) {
         return null;
     }
 
+    function timeout(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     async function getComponents() {
         const requestId = uuidv4();
 
