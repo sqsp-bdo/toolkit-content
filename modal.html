@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <style>
+            #content {
+                width: 100%;
+                height: 100%;
+                font-family: sans-serif;
+            }
+            .button {
+                background-color: #000;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <link rel="icon" 
+        type="image/png" 
+        href="/toolkit-content/favicon.png" />
+    <body>
+        <div id="content">
+            <h1>Modal</h1>
+            <span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac eros arcu. In ultrices odio id felis feugiat iaculis. Aenean erat dolor, aliquet a lectus a, ultricies porttitor justo. Phasellus rhoncus condimentum euismod. Aliquam et accumsan urna, in suscipit tellus. Morbi consectetur venenatis ligula scelerisque placerat. Nunc a justo sed dui convallis faucibus at a tellus. Mauris sit amet eros dolor. Vivamus ullamcorper enim nulla, vulputate eleifend ante finibus non. Vestibulum nec sagittis tortor. Pellentesque suscipit hendrerit lorem ut malesuada. Integer auctor gravida tortor, vitae porttitor nisi egestas et. Sed ultricies odio congue gravida luctus. Nullam eu magna auctor tellus rhoncus gravida. Nulla in urna augue. Nulla id mi nisi.
+            </span>
+            <span>
+                    Curabitur id congue arcu. Proin sit amet ex facilisis, interdum purus eu, blandit tortor. Suspendisse vitae accumsan lacus, et auctor massa. Mauris imperdiet nibh nec quam gravida, id laoreet nisi semper. Vivamus vestibulum ornare viverra. Fusce feugiat orci sit amet eros fringilla tincidunt. Suspendisse luctus malesuada purus quis scelerisque. Sed ultrices augue non consectetur cursus. Morbi sit amet nunc at arcu facilisis laoreet.
+            </span>
+            <button id="close">Close</button>
+        </div>
+
+        <script src="/toolkit-content/toolkit-client.js"></script>
+
+        <script>
+            const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
+
+            if (!!toolkitClient) {
+                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
+                toolkitClient.setVisibility(true, '500px', '300px');
+                document.getElementById('close').addEventListener('click', () => {
+                    toolkitClient.setVisibility(false);
+                });
+            }
+        </script>
+    </body>
+</html>
