@@ -77,7 +77,7 @@ function makeToolkitClient(targetOrigin) {
         return null;
     }
 
-    const getComponents  = async () => {
+    async function getComponents() {
         const requestId = uuidv4();
 
         parent.postMessage({
@@ -148,6 +148,30 @@ function makeToolkitClient(targetOrigin) {
         setSize,
         setVisibility,
         subscribe,
-        getComponents
+        getComponents: new Promise((resolve, reject) => {
+            const requestId = uuidv4();
+
+            parent.postMessage({
+                id: initialData.id,
+                extensionId: initialData.extensionId,
+                type: 'components',
+                version,
+                requestId
+            }, targetOrigin);
+    
+            const maxCycles = 100;
+            var cycle = 0;
+    
+            while (!responses[requestId]) { 
+                if (maxCycles === cycle++) {
+                    reject('Timed out!');
+                }
+                await timeout(50);
+            }
+    
+            const response = responses[requestId];
+            delete responses[requestId];
+            reesolve(response);
+        })
     }
 }
