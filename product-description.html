@@ -17,15 +17,15 @@
             <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
         </div>
 
-        <script src="/toolkit-content/toolkit-sdk.js"></script>
+        <script src="/toolkit-content/toolkit-client.js"></script>
 
         <script>
-            const toolkitSdk = makeToolkitSdk('https://mayflower-pike-jg7c.dev.squarespace.net/');
-            if (toolkitSdk.subscribe) {
-                toolkitSdk.subscribe((data) => { console.log(data) }, ['windowResize']);
-            }
-            if (toolkitSdk.setVisibility) {
-                toolkitSdk.setVisibility(true, '220px', '0px');
+            const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
+
+            if (!!toolkitClient) {
+                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
+                toolkitClient.setVisibility(true, '220px', '0px');
+
             }
         </script>
     </body>
