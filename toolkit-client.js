@@ -109,6 +109,13 @@ function makeToolkitClient(targetOrigin) {
         return response;
     }
 
+    function getInitialSize() {
+        return {
+            width: initialData.windowWidth,
+            height: initialData.windowHeight
+        }
+    }
+
     function setSize(height, width, componentId = initialData.id) {
         parent.postMessage({
             id: initialData.id,
@@ -151,6 +158,7 @@ function makeToolkitClient(targetOrigin) {
     }
 
     return {
+        getInitialSize,
         setSize,
         setVisibility,
         subscribe,

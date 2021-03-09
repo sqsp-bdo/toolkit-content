@@ -27,6 +27,13 @@
             .text {
                 margin-bottom: 20px;
             }
+            .device {
+                display: none;
+                transform: scale(2);
+            }
+            .device.visible {
+                display: inline-block;
+            }
         </style>
     </head>
     <link rel="icon" 
@@ -35,11 +42,22 @@
     <body>
         <div id="content">
             <h1>Modal</h1>
+            <h2>Device type:&nbsp;
+                <span id="mobile" class="device">
+                    <svg color="gray.100" fill="currentColor" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg" class="css-1fy6kej"><path d="M14 16H8v2h6v-2z"></path><path clip-rule="evenodd" d="M14 1H8a3 3 0 00-3 3v14a3 3 0 003 3h6a3 3 0 003-3V4a3 3 0 00-3-3zM7 4a1 1 0 011-1h6a1 1 0 011 1v14a1 1 0 01-1 1H8a1 1 0 01-1-1V4z" fill-rule="evenodd"></path></svg>
+                </span>
+                <span id="tablet" class="device">
+                    <svg color="gray.100" fill="currentColor" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg" class="css-1fy6kej"><path d="M15 13H7v2h8v-2z"></path><path clip-rule="evenodd" d="M17 4H5a3 3 0 00-3 3v8a3 3 0 003 3h12a3 3 0 003-3V7a3 3 0 00-3-3zM4 7a1 1 0 011-1h12a1 1 0 011 1v8a1 1 0 01-1 1H5a1 1 0 01-1-1V7z" fill-rule="evenodd"></path></svg>
+                </span>
+                <span id="desktop" class="device visible">
+                    <svg color="gray.100" fill="currentColor" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg" class="css-1fy6kej"><path clip-rule="evenodd" d="M2 3h18v13h-8v2h3v2H7v-2h3v-2H2V3zm2 2v9h14V5H4z" fill-rule="evenodd"></path></svg>
+                </span>    
+            </h2>
+            <h2>Window size: <span id="wx"></span>px ✕ <span id="wy"></span>px</h2>
+            <h2>iframe size: <span id="ix"></span> ✕ <span id="iy"></span></h2>
+
             <div class="text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac eros arcu. In ultrices odio id felis feugiat iaculis. Aenean erat dolor, aliquet a lectus a, ultricies porttitor justo. Phasellus rhoncus condimentum euismod. Aliquam et accumsan urna, in suscipit tellus. Morbi consectetur venenatis ligula scelerisque placerat. Nunc a justo sed dui convallis faucibus at a tellus. Mauris sit amet eros dolor. Vivamus ullamcorper enim nulla, vulputate eleifend ante finibus non. Vestibulum nec sagittis tortor. Pellentesque suscipit hendrerit lorem ut malesuada. Integer auctor gravida tortor, vitae porttitor nisi egestas et. Sed ultricies odio congue gravida luctus. Nullam eu magna auctor tellus rhoncus gravida. Nulla in urna augue. Nulla id mi nisi.
-            </div>
-            <div class="text">
-                    Curabitur id congue arcu. Proin sit amet ex facilisis, interdum purus eu, blandit tortor. Suspendisse vitae accumsan lacus, et auctor massa. Mauris imperdiet nibh nec quam gravida, id laoreet nisi semper. Vivamus vestibulum ornare viverra. Fusce feugiat orci sit amet eros fringilla tincidunt. Suspendisse luctus malesuada purus quis scelerisque. Sed ultrices augue non consectetur cursus. Morbi sit amet nunc at arcu facilisis laoreet.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac eros arcu. In ultrices odio id felis feugiat iaculis. Aenean erat dolor, aliquet a lectus a, ultricies porttitor justo. Phasellus rhoncus condimentum euismod. Aliquam et accumsan urna, in suscipit tellus. Morbi consectetur venenatis ligula scelerisque placerat. Nunc a justo sed dui convallis faucibus at a tellus. Mauris sit amet eros dolor. Vivamus ullamcorper enim nulla, vulputate eleifend ante finibus non. Vestibulum nec sagittis tortor. Pellentesque suscipit hendrerit lorem ut malesuada. Integer auctor gravida tortor, vitae porttitor nisi egestas et. Sed ultricies odio congue gravida luctus. Nullam eu magna auctor tellus rhoncus gravida. Nulla in urna augue. Nulla id mi nisi.
             </div>
             <div>
                 <button id="close">Close</button>
@@ -51,9 +69,56 @@
         <script>
             const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
 
+            const calculateIframeSize = function(data) {
+                const { width, height } = data;
+                let x, y, device;
+                const isTouch = matchMedia('(pointer:coarse)').matches;
+                document.querySelector('.device.visible').classList.remove('visible');
+
+                if (isTouch) {
+                    if (width > 640) {
+                        x = '500px';
+                        y = '500px';
+                        device = 'tablet';
+                    } else {
+                        x = '100%';
+                        y = '100%';
+                        device = 'mobile';
+                    }
+                } else {
+                    device = 'desktop';
+                    if (width > 900) {
+                        x = '500px';
+                        y = '600px';
+                    } else {
+                        x = '400px';
+                        y = '400px';
+                    }
+                }
+
+                document.getElementById(device).classList.add('visible');
+                document.getElementById('wx').innerHTML = width;
+                document.getElementById('wy').innerHTML = height;
+                document.getElementById('ix').innerHTML = x;
+                document.getElementById('iy').innerHTML = y;
+                return { 
+                    iframeWidth: x,
+                    iframeHeight: y
+                 }
+            }
+            
+            const onResize = function(data) {
+                const { type, width, height } = data;
+                if (type === 'windowResize') {
+                    const { iframeWidth, iframeHeight } = calculateIframeSize({ width, height });
+                    toolkitClient.setSize(iframeWidth, iframeHeight);
+                }
+            }
+
             if (!!toolkitClient) {
-                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
-                toolkitClient.setVisibility(true, '500px', '600px');
+                const { iframeWidth, iframeHeight } = calculateIframeSize(toolkitClient.getInitialSize());
+                toolkitClient.subscribe(onResize, ['windowResize']);
+                toolkitClient.setVisibility(true, iframeWidth, iframeHeight);
                 document.getElementById('close').addEventListener('click', () => {
                     toolkitClient.setVisibility(false);
                 });
