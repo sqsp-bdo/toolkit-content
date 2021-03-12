@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <style>
+            #content {
+                width: 100%;
+                height: 100%;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <link rel="icon" 
+        type="image/png" 
+        href="/toolkit-content/favicon.png" />
+    <body>
+
+        <script src="/toolkit-content/toolkit-client.js"></script>
+
+        <script>
+            const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
+
+            if (!!toolkitClient) {
+                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
+                toolkitClient.getComponents().then(components => console.log(components));
+                toolkitClient.setVisibility(true, '220px', '0px');
+
+            }
+        </script>
+
+        <div id="content">
+            <h1>Product Description</h1>
+            
+            <img src="https://images.pexels.com/photos/3881775/pexels-photo-3881775.jpeg"/>
+
+            <img src="https://images.pexels.com/photos/2759315/pexels-photo-2759315.jpeg"/>
+
+            <img src="https://images.pexels.com/photos/561870/pexels-photo-561870.jpeg"/>
+
+            <img src="https://images.pexels.com/photos/677974/pexels-photo-677974.jpeg"/>
+
+            <img src="https://images.pexels.com/photos/3498323/pexels-photo-3498323.jpeg"/>
+
+            <img src="https://images.pexels.com/photos/1054666/pexels-photo-1054666.jpeg"/>
+        </div>
+    </body>
+</html>
