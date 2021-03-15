@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/toolkit-content/livechat-simulation/css-5kb.css">
+        <style>
+            #content {
+                width: 100%;
+                height: 100%;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <link rel="icon" 
+        type="image/png" 
+        href="/toolkit-content/favicon.png" />
+    <body>
+        <div id="content">
+            <input type="text" onkeydown="setTimeoutValue()" id="timeout"/>
+        </div>
+
+        <script src="/toolkit-content/toolkit-client.js"></script>
+
+        <script>
+            var timeout = 1000;
+
+            function setTimeoutValue()
+            {
+                if(event.key !== 'Enter') {
+                    return;      
+                }
+
+                const newTimeout = document.getElementById('timeout').value;
+
+                document.cookie = 'timeout=' + newTimeout;
+            }
+
+            const cookies = decodeURIComponent(document.cookie).split(';');
+
+            for (var i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split('=');
+                if (cookie[0] === "timeout") {
+                    timeout = Number(cookie[1]);
+                }
+            }
+
+            document.getElementById('timeout').value = timeout;
+
+            const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
+
+            if (!!toolkitClient) {
+                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
+                toolkitClient.getComponents().then(components => console.log(components));
+                toolkitClient.setVisibility(true, '220px', '0px');
+
+                function recursivelyGetComponents() {
+                    toolkitClient.getComponents().then(components => console.log(components));
+                    setTimeout(timeout(), timeout);
+                }
+
+            }
+        </script>
+    </body>
+</html>
