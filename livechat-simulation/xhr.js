@@ -2,6 +2,7 @@ var complete = 0;
 
 var oReq1 = new XMLHttpRequest();
 oReq1.addEventListener("load", () => {
+    console.log(complete);
     console.log(this);
     complete++;
 });
@@ -10,6 +11,7 @@ oReq1.send();
 
 var oReq2 = new XMLHttpRequest();
 oReq2.addEventListener("load", () => {
+    console.log(complete);
     console.log(this);
     complete++;
 });
@@ -18,6 +20,7 @@ oReq2.send();
 
 var oReq3 = new XMLHttpRequest();
 oReq3.addEventListener("load", () => {
+    console.log(complete);
     console.log(this);
     complete++;
 });
