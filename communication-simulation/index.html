@@ -34,7 +34,7 @@
                 document.cookie = 'timeout=' + newTimeout;
             }
 
-            const cookies = decodeURIComponent(document.cookie)
+            const cookies = document.cookie ? decodeURIComponent(document.cookie) : null
 
             if (cookies) {
                 const splitCookies = cookies.split(';');
