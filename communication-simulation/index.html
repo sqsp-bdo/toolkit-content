@@ -15,6 +15,7 @@
     <body>
         <div id="content">
             <input type="text" onkeydown="setTimeoutValue()" id="timeout"/>
+            <div id="output"></div>
         </div>
 
         <script src="/toolkit-content/toolkit-client.js"></script>
@@ -52,7 +53,11 @@
                 toolkitClient.setVisibility(true, '220px', '0px');
 
                 function recursivelyGetComponents() {
-                    toolkitClient.getComponents().then(components => console.log(components));
+                    toolkitClient.getComponents().then(components => {
+                        console.log(components);
+                        document.getElementById('output').value = 'Response received at ' + new Date();
+                    });
+                    toolkitClient.setVisibility(true, '220px', '0px');
                     setTimeout(timeout(), timeout);
                 }
 
