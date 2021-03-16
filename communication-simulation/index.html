@@ -34,12 +34,15 @@
                 document.cookie = 'timeout=' + newTimeout;
             }
 
-            const cookies = decodeURIComponent(document.cookie).split(';');
+            const cookies = decodeURIComponent(document.cookie)
 
-            for (var i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].split('=');
-                if (cookie[0] === "timeout") {
-                    timeout = Number(cookie[1]);
+            if (cookies) {
+                const splitCookies = cookies.split(';');
+                for (var i = 0; i < splitCookies.length; i++) {
+                    const cookie = cookies[i].split('=');
+                    if (cookie[0] === "timeout") {
+                        timeout = Number(cookie[1]);
+                    }
                 }
             }
 
