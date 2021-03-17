@@ -57,7 +57,7 @@
                         document.getElementById('output').value = 'Response received at ' + new Date();
                     });
                     toolkitClient.setVisibility(true, '220px', '0px');
-                    setTimeout(timeout(), timeout);
+                    setTimeout(timeout(), recursivelyGetComponents);
                 }
 
                 recursivelyGetComponents();
