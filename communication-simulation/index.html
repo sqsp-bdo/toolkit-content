@@ -21,7 +21,17 @@
         <script src="/toolkit-content/toolkit-client.js"></script>
 
         <script>
-            var timeout = 1000;
+
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            var timeout = getParameterByName('timeout') ? Number(getParameterByName('timeout')) : 1000;
 
             function setTimeoutValue()
             {
@@ -29,21 +39,7 @@
                     return;      
                 }
 
-                const newTimeout = document.getElementById('timeout').value;
-
-                document.cookie = 'timeout=' + newTimeout;
-            }
-
-            const cookies = document.cookie ? decodeURIComponent(document.cookie) : null
-
-            if (cookies) {
-                const splitCookies = cookies.split(';');
-                for (var i = 0; i < splitCookies.length; i++) {
-                    const cookie = cookies[i].split('=');
-                    if (cookie[0] === "timeout") {
-                        timeout = Number(cookie[1]);
-                    }
-                }
+                timeout = document.getElementById('timeout').value;
             }
 
             document.getElementById('timeout').value = timeout;
@@ -64,6 +60,7 @@
                     setTimeout(timeout(), timeout);
                 }
 
+                recursivelyGetComponents();
             }
         </script>
     </body>
