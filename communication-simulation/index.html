@@ -54,7 +54,7 @@
                 function recursivelyGetComponents() {
                     toolkitClient.getComponents().then(components => {
                         console.log(components);
-                        document.getElementById('output').value = 'Response received at ' + new Date();
+                        document.getElementById('output').innerHTML = 'Response received at ' + new Date();
                     });
                     toolkitClient.setVisibility(true, '220px', '0px');
                     setTimeout(recursivelyGetComponents, timeout);
