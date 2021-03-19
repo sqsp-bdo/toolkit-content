@@ -13,19 +13,6 @@
         href="/toolkit-content/favicon.png" />
     <body>
 
-        <script src="/toolkit-content/toolkit-client.js"></script>
-
-        <script>
-            const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
-
-            if (!!toolkitClient) {
-                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
-                toolkitClient.getComponents().then(components => console.log(components));
-                toolkitClient.setVisibility(true, '220px', '0px');
-
-            }
-        </script>
-
         <div id="content">
             <h1>Images</h1>
             
@@ -41,5 +28,17 @@
 
             <img src="https://images.pexels.com/photos/1054666/pexels-photo-1054666.jpeg" style="width: 100%"/>
         </div>
+
+        <script src="/toolkit-content/toolkit-client.js"></script>
+
+        <script>
+            const toolkitClient = makeToolkitClient('*');
+
+            if (!!toolkitClient) {
+                toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
+                toolkitClient.getComponents().then(components => console.log(components));
+                toolkitClient.setVisibility(true, '300px', '300px');
+            }
+        </script>
     </body>
 </html>
