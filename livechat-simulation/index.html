@@ -61,7 +61,7 @@
                 setTimeout(timeout(), 500);
             }
 
-            const toolkitClient = makeToolkitClient('https://mayflower-pike-jg7c.dev.squarespace.net');
+            const toolkitClient = makeToolkitClient('*');
 
             if (!!toolkitClient) {
                 toolkitClient.subscribe((data) => { console.log(data) }, ['windowResize']);
