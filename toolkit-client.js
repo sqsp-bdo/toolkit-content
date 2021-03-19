@@ -33,7 +33,7 @@ function makeToolkitClient(targetOrigin) {
     window.addEventListener('message', function(event) {
         const type = event.data.type;
 
-        if (event.origin !== targetOrigin) { return; }
+        //if (event.origin !== targetOrigin) { return; }
 
         const events = Object.keys(messageValidators); 
 
