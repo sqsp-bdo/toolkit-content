@@ -40,6 +40,17 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));
 
 /***/ }),
 
+/***/ "./build-babel/requests.js":
+/*!*********************************!*\
+  !*** ./build-babel/requests.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.get = exports.post = void 0;\n\nconst post = async (url, data, options = {}) => {\n  const response = await fetch(url, Object.assign(Object.assign({\n    method: 'POST'\n  }, options), {\n    body: JSON.stringify(data)\n  }));\n  return response.json();\n};\n\nexports.post = post;\n\nconst get = async (url, options = {}) => {\n  const response = await fetch(url, Object.assign({\n    method: 'GET'\n  }, options));\n  return response.json();\n};\n\nexports.get = get;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/requests.js?");
+
+/***/ }),
+
 /***/ "./build-babel/userProfile/index.js":
 /*!******************************************!*\
   !*** ./build-babel/userProfile/index.js ***!
@@ -47,7 +58,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.get = void 0;\n\nconst Cookie = __webpack_require__(/*! @sqs/cookie-cutter */ \"./node_modules/@sqs/cookie-cutter/index.js\");\n\nconst SITE_USER_CRUMB = 'siteUserCrumb';\nconst SITE_USER_XSRF_TOKEN = 'X-SiteUser-XSRF-Token';\nconst USER_PROFILE_URI = '/api/extensions/user-profile';\n\nconst get = async () => {\n  const siteUserXSRFToken = Cookie.get(SITE_USER_CRUMB);\n\n  if (siteUserXSRFToken) {\n    try {\n      const response = await fetch(USER_PROFILE_URI, {\n        method: 'GET',\n        headers: {\n          [SITE_USER_XSRF_TOKEN]: siteUserXSRFToken\n        }\n      });\n      return response.json();\n    } catch (error) {\n      return undefined;\n    }\n  }\n\n  return undefined;\n};\n\nexports.get = get;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/userProfile/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.get = void 0;\n\nconst Cookie = __webpack_require__(/*! @sqs/cookie-cutter */ \"./node_modules/@sqs/cookie-cutter/index.js\");\n\nconst requests_1 = __webpack_require__(/*! ../requests */ \"./build-babel/requests.js\");\n\nconst SITE_USER_CRUMB = 'siteUserCrumb';\nconst SITE_USER_XSRF_TOKEN = 'X-SiteUser-XSRF-Token';\nconst USER_PROFILE_URI = '/api/extensions/user-profile';\n\nconst get = async () => {\n  const siteUserXSRFToken = Cookie.get(SITE_USER_CRUMB);\n\n  if (siteUserXSRFToken) {\n    try {\n      return requests_1.get(USER_PROFILE_URI, {\n        headers: {\n          [SITE_USER_XSRF_TOKEN]: siteUserXSRFToken\n        }\n      });\n    } catch (error) {\n      return undefined;\n    }\n  }\n\n  return undefined;\n};\n\nexports.get = get;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/userProfile/index.js?");
 
 /***/ })
 
