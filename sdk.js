@@ -36,7 +36,40 @@ eval("var SPLIT_COOKIE_KEY_VALUE = /^([^=]+)=([^;]*)$/;\nvar exports = module.ex
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\n\nconst userProfile = __webpack_require__(/*! ./userProfile */ \"./build-babel/userProfile/index.js\");\n\nexports.default = {\n  userProfile\n};\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.page = exports.userProfile = void 0;\n\nconst page = __webpack_require__(/*! ./page */ \"./build-babel/page/index.js\");\n\nexports.page = page;\n\nconst userProfile = __webpack_require__(/*! ./userProfile */ \"./build-babel/userProfile/index.js\");\n\nexports.userProfile = userProfile;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/index.js?");
+
+/***/ }),
+
+/***/ "./build-babel/page/details/index.js":
+/*!*******************************************!*\
+  !*** ./build-babel/page/details/index.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.getDetails = void 0;\n\nconst types_1 = __webpack_require__(/*! ./types */ \"./build-babel/page/details/types.js\");\n\nconst squarespaceContext_1 = __webpack_require__(/*! ../../squarespaceContext */ \"./build-babel/squarespaceContext.js\");\n\nconst getDetails = async () => {\n  const context = squarespaceContext_1.getContext();\n\n  if (!context) {\n    Promise.reject(new Error('Not a valid Squarespace page.'));\n  }\n\n  let type;\n\n  if (context.item && context.collection.type === 13) {\n    type = types_1.PageType.Product;\n  } else if ((context === null || context === void 0 ? void 0 : context.collection.type) === 13) {\n    type = types_1.PageType.ProductCollection;\n  } else {\n    type = types_1.PageType.Other;\n  }\n\n  const product = type === types_1.PageType.Product ? {\n    id: context.item.id\n  } : undefined;\n  return Promise.resolve({\n    website: {\n      id: context.website.id\n    },\n    type,\n    product\n  });\n};\n\nexports.getDetails = getDetails;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/page/details/index.js?");
+
+/***/ }),
+
+/***/ "./build-babel/page/details/types.js":
+/*!*******************************************!*\
+  !*** ./build-babel/page/details/types.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.PageType = void 0;\nvar PageType;\n\n(function (PageType) {\n  PageType[\"Product\"] = \"Product\";\n  PageType[\"ProductCollection\"] = \"ProductCollection\";\n  PageType[\"Other\"] = \"Other\";\n})(PageType = exports.PageType || (exports.PageType = {}));\n\n;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/page/details/types.js?");
+
+/***/ }),
+
+/***/ "./build-babel/page/index.js":
+/*!***********************************!*\
+  !*** ./build-babel/page/index.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\n\nconst details_1 = __webpack_require__(/*! ./details */ \"./build-babel/page/details/index.js\");\n\nexports.default = {\n  getDetails: details_1.getDetails\n};\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/page/index.js?");
 
 /***/ }),
 
@@ -48,6 +81,17 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));
 
 "use strict";
 eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.HttpError = exports.get = exports.post = void 0;\n\nconst post = async (url, data, options = {}) => {\n  const response = await fetch(url, Object.assign(Object.assign({\n    method: 'POST'\n  }, options), {\n    body: JSON.stringify(data)\n  }));\n\n  if (response.status >= 400) {\n    throw new HttpError(response.status, await response.text());\n  }\n\n  return response.json();\n};\n\nexports.post = post;\n\nconst get = async (url, options = {}) => {\n  const response = await fetch(url, Object.assign({\n    method: 'GET'\n  }, options));\n\n  if (response.status >= 400) {\n    throw new HttpError(response.status, await response.text());\n  }\n\n  return response.json();\n};\n\nexports.get = get;\n\nclass HttpError {\n  constructor(status, message) {\n    this.status = status;\n    this.message = message;\n\n    this.getStatus = () => this.status;\n\n    this.getMessage = () => this.message;\n  }\n\n}\n\nexports.HttpError = HttpError;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/requests.js?");
+
+/***/ }),
+
+/***/ "./build-babel/squarespaceContext.js":
+/*!*******************************************!*\
+  !*** ./build-babel/squarespaceContext.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.getContext = void 0;\n\nconst getContext = () => {\n  var _a; //@ts-ignore\n\n\n  const context = (_a = window.Static) === null || _a === void 0 ? void 0 : _a.SQUARESPACE_CONTEXT;\n  return context;\n};\n\nexports.getContext = getContext;\n\n//# sourceURL=webpack://SquarespaceSDK/./build-babel/squarespaceContext.js?");
 
 /***/ }),
 
